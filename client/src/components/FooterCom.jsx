@@ -90,7 +90,8 @@ export default function FooterCom() {
                     href="#" 
                     by='Mati blog' 
                     year={new Date().getFullYear()}/>
-                    <div className="flex gap-6 sm:mt-0 mt-4 sm:justify-center mb-3" >
+
+                    <div className="flex gap-6 sm:mt-3 mt-4 sm:justify-center mb-3" >
                       <Footer.Icon href='#' icon={BsFacebook}/>
                       <Footer.Icon href='#' icon={BsInstagram}/>
                       <Footer.Icon href='#' icon={BsTwitter}/>
