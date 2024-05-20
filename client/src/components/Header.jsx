@@ -4,13 +4,17 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { FaSearch } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import { toggleTheme } from '../redux/theme/themeSlice';
 
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const { theme } = useSelector((state) => state.theme);
   const [searchTerm, setSearchTerm] = useState('')
   const [visible, setVisible] = useState(false);
-   const path = useLocation().pathname;
+  const path = useLocation().pathname;
+  const dispatch = useDispatch();
+
    const handleSubmit  = async (e) =>{
 
    }
@@ -57,6 +61,9 @@ const Header = () => {
           </li>
         </Link>
       </ul>
+      <button className='text-black' onClick={()=> dispatch(toggleTheme())}>
+        {theme === 'light' ? <FaSun/> : <FaMoon/> }
+      </button>
 
     {
       currentUser ? (
