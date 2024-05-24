@@ -21,6 +21,7 @@ import {
 import { useDispatch } from 'react-redux';
 import Modal from './Modal';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
 
 export default function DashProfile() {
     const {currentUser} = useSelector((state) => state.user);
@@ -29,6 +30,7 @@ export default function DashProfile() {
     const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
     const [imageFileUploadError, setImageFileUploadError] = useState(null);
     const [imageFileUploading, setImageFileUploading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
     const [updateUserError, setUpdateUserError] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -190,9 +192,21 @@ export default function DashProfile() {
           type='submit'
           className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l 
           focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium 
-          rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-full">
-            Update
+          rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-full"
+          disabled={loading || imageFileUploading}>
+            {loading ? 'Loading...' : 'Update'}
             </button>
+     {currentUser.isAdmin && (
+      <Link to={'/create-post'}>
+         <button className="text-white bg-gradient-to-r from-green-500 to-pink-500 hover:bg-gradient-to-l 
+          focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium 
+          rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-full" >
+           Create a post
+         </button>
+      </Link>
+     )}
+     
+
       </form>
       <div className="text-red-500 flex justify-between mt-5">
         <span onClick={()=> setShowModal(true)} className='cursor-pointer'>Delete Account</span>
