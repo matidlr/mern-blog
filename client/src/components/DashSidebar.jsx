@@ -1,12 +1,14 @@
-import  { HiArrowSmRight, HiUser } from 'react-icons/hi';
+import  { HiArrowSmRight, HiDocumentText, HiUser } from 'react-icons/hi';
 import {Link, useLocation} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { signoutSuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export default function DashSidebar() {
   const dispatch = useDispatch();
-  const location = useLocation()
+  const location = useLocation();
+  const {currentUser} = useSelector((state) => state.user);
   const [tab, setTab] =useState('')
    useEffect(() => {
     const urlParams = new URLSearchParams(location.search)
@@ -33,8 +35,8 @@ export default function DashSidebar() {
   };
   return (
     <div>
-      <div className='bg-black w-20'>
-        <div className='bg-black-600 w-20 p-auto py-1'>
+      <div className='bg-gray-500 w-20 h-72'>
+        <div className='bg-black-600 w-20  pt-2'>
           <Link to='/dashboard?tab=profile'>
               <div className='flex hover:bg-slate-400 items-center text-white'>
               <span className='mr-0.5'>
@@ -43,6 +45,18 @@ export default function DashSidebar() {
                  <p>Profile</p>
               </div>
           </Link>
+          {currentUser.isAdmin && (
+              <Link to='/dashboard?tab=posts'>
+              <div className='flex hover:bg-slate-400 items-center text-white'>
+              <span className='mr-0.5'>
+                <HiDocumentText className='text-white'/>
+              </span>
+                 <p>Posts</p>
+              </div>
+          </Link>
+          )}
+         
+          
           <div className=' text-white cursor-pointer flex hover:bg-slate-400 items-center'>
             <span className='mr-0.5'><HiArrowSmRight/></span>
             <p onClick={handleSignout}>Sign out</p>
