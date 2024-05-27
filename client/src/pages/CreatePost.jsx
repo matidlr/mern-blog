@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import QuillEditor from 'react-quill';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {getDownloadURL, getStorage, uploadBytesResumable, ref} from 'firebase/storage';
 import {app} from '../firebase';
@@ -122,7 +122,7 @@ export default function CreatePost() {
            />
        )}
 
-        <QuillEditor 
+        <ReactQuill 
             theme="snow" 
             placeholder='Write something...' 
             className='h-72 mb-1' 

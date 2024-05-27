@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import {Link} from 'react-router-dom';
+import Modal from './Modal';
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 export default function DashPosts() {
    const {currentUser} = useSelector((state)=> state.user);
    const [userPosts, setUserPosts] = useState([]);
    const [showMore, setShowMore] = useState(true);
+   const [showModal, setShowModal] = useState(false);
+   const [postIdToDelete, setPostIdToDelete] = useState('');
    useEffect(()=> {
     const fetchPosts = async () => {
       try {
@@ -38,6 +42,28 @@ export default function DashPosts() {
         if (data.posts.length < 9) {
           setShowMore(false);
         }
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleDeletePost = async () => {
+    setShowModal(false);
+    try {
+      const res = await fetch(
+        `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
+        {
+          method: 'DELETE',
+        }
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        setUserPosts((prev) =>
+          prev.filter((post) => post._id !== postIdToDelete)
+        );
       }
     } catch (error) {
       console.log(error.message);
@@ -82,7 +108,12 @@ export default function DashPosts() {
                         <Link className="text-m" to={`/post/${post.category}`}>{post.category}</Link>
                       </div>
                       <div className="ml-8">
-                        <span className="text-red-500 hover:underline cursor-pointer">Delete</span>
+                        <span onClick={()=> {
+                          setShowModal(true);
+                          setPostIdToDelete(post._id)
+                        }} className="text-red-500 hover:underline cursor-pointer">
+                             Delete
+                          </span>
                       </div>
                       <div className="ml-3.5 ">
                         <Link to={`/update-post/${post._id}`}>
@@ -106,6 +137,22 @@ export default function DashPosts() {
       ) : (
         <p>You have no posts yet!</p>
       )}
+            {showModal && (
+           <Modal onClose={()=>setShowModal(false)}>
+               <div>
+                 <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto'/>
+                 <h3 className='ml-8 mb-4 text-lg text-gray-500 dark:text-gray-400'>Are you sure you want to delete the post?</h3>
+                 <div className="flex justify-center my-3 gap-4 ">
+                   <button className='bg-red-500 rounded-lg p-2 text-white' onClick={handleDeletePost}>
+                     Yes, I'm sure
+                   </button>
+                   <button onClick={()=> setShowModal(false)} className='bg-gray-500 rounded-lg p-2 text-white'>
+                    No, Cancel
+                   </button>
+                 </div>
+               </div>
+           </Modal>
+      ) }
     </div>
   )
 }
