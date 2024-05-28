@@ -1,4 +1,11 @@
-import  { HiArrowSmRight, HiDocumentText, HiUser } from 'react-icons/hi';
+import {
+  HiUser,
+  HiArrowSmRight,
+  HiDocumentText,
+  HiOutlineUserGroup,
+  HiAnnotation,
+  HiChartPie,
+} from 'react-icons/hi';
 import {Link, useLocation} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { signoutSuccess } from '../redux/user/userSlice';
@@ -56,6 +63,16 @@ export default function DashSidebar() {
           </Link>
           )}
          
+         {currentUser.isAdmin && (
+              <Link to='/dashboard?tab=users'>
+              <div className='flex hover:bg-slate-400 items-center text-white'>
+              <span className='mr-0.5'>
+                <HiOutlineUserGroup className='text-white'/>
+              </span>
+                 <p>Users</p>
+              </div>
+          </Link>
+          )}
           
           <div className=' text-white cursor-pointer flex hover:bg-slate-400 items-center'>
             <span className='mr-0.5'><HiArrowSmRight/></span>
