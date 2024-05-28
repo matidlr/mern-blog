@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import {Link} from 'react-router-dom';
 import Modal from './Modal';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import { Table, Button } from 'flowbite-react';
 
 export default function DashPosts() {
    const {currentUser} = useSelector((state)=> state.user);
@@ -73,57 +74,69 @@ export default function DashPosts() {
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 
     scrollbar-thumb-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-500">
-      {currentUser.isAdmin && userPosts.length > 0 ? (
-          <>
-          <div className="">
-            <div className="flex gap-2">
-              <h1 className="shadow-md p-1 cursor-pointer hover:bg-slate-400">Date updated</h1>
-              <h1 className="shadow-md p-1 cursor-pointer hover:bg-slate-400">Post image</h1>
-              <h1 className="shadow-md p-1 cursor-pointer hover:bg-slate-400">Post title</h1>
-              <h1 className="shadow-md p-1 cursor-pointer hover:bg-slate-400">Category</h1>
-              <h1 className="shadow-md p-1 cursor-pointer hover:bg-slate-400">Delete</h1>
-              <div className="shadow-md p-1 cursor-pointer hover:bg-slate-400">
+       {currentUser.isAdmin && userPosts.length > 0 ? (
+        <>
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg" key={currentUser._id}>
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">Date updated</th>
+              <th scope="col" className="px-6 py-3">Post image</th>
+              <th scope="col" className="px-6 py-3">Post title</th>
+              <th scope="col" className="px-6 py-3">Category</th>
+              <th scope="col" className="px-6 py-3">Delete</th>
+              <th scope="col" className="px-6 py-3">
                 <span>Edit</span>
-              </div>
-            </div>
+              </th>
+            </tr>
+            </thead>
             {userPosts.map((post) => (
-                <div key={post.userId} className="mt-2 flex divide-y">
-                  <div className="flex bg-white dark_border-gray-700 dark:bg-gray-800">
-                    <div className="mr-9 text-sm ml-3">
-                      {new Date(post.updatedAt).toLocaleDateString()}
-                    </div>
-                    <div className="mr-5">
-                      <Link to={`/post/${post.slug}`}>
+              <tbody key={currentUser._id}>
+                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                  <td className="px-6 py-4">
+                    {new Date(post.updatedAt).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4">
+                    <Link to={`/post/${post.slug}`}>
                       <img
                         src={post.image}
                         alt={post.title}
                         className='w-20 h-10 object-cover bg-gray-500'
-                        />
-                      </Link>
-                      </div>
-                      <div className="">
-                        <Link className="text-m text-gray-900 font-medium dark:text-white" to={`/post/${post.slug}`}>{post.title}</Link>
-                      </div>
-                      <div className="ml-5">
-                        <Link className="text-m" to={`/post/${post.category}`}>{post.category}</Link>
-                      </div>
-                      <div className="ml-8">
-                        <span onClick={()=> {
-                          setShowModal(true);
-                          setPostIdToDelete(post._id)
-                        }} className="text-red-500 hover:underline cursor-pointer">
-                             Delete
-                          </span>
-                      </div>
-                      <div className="ml-3.5 ">
-                        <Link to={`/update-post/${post._id}`}>
-                          <span className="text-green-500 hover:underline cursor-pointer">Edit</span>
-                        </Link>
-                      </div>
-                    
-                  </div>
-                </div>
+                      />
+                    </Link>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Link
+                      className='font-medium text-gray-900 dark:text-white'
+                      to={`/post/${post.slug}`}
+                    >
+                      {post.title}
+                    </Link>
+                  </td>
+                  <td className="px-6 py-4">{post.category}</td>
+                  <td className="px-6 py-4">
+                    <span
+                      onClick={() => {
+                        setShowModal(true);
+                        setPostIdToDelete(post._id);
+                      }}
+                      className='font-medium text-red-500 hover:underline cursor-pointer'
+                    >
+                      Delete
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Link
+                      className='text-teal-500 hover:underline'
+                      to={`/update-post/${post._id}`}
+                    >
+                      <span>Edit</span>
+                    </Link>
+                  </td>
+                </tr>
+                </tbody>
             ))}
+          </table>
           </div>
           {showMore && (
             <button
@@ -133,6 +146,7 @@ export default function DashPosts() {
               Show more
             </button>
           )}
+        
           </>
       ) : (
         <p>You have no posts yet!</p>
@@ -155,4 +169,4 @@ export default function DashPosts() {
       ) }
     </div>
   )
-}
+};
