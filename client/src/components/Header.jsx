@@ -102,19 +102,19 @@ export default function Header  ()  {
             </Button>
           </Link>
         )}
-        <Navbar.Toggle />
+       
       </div>
-      <Navbar.Collapse>
-        <Navbar.Link className='mx-3' active={path === '/'} as={'div'}>
-          <Link to='/'>Home</Link>
-        </Navbar.Link>
-        <Navbar.Link className='mr-3' active={path === '/about'} as={'div'}>
-          <Link to='/about'>About</Link>
-        </Navbar.Link>
-        <Navbar.Link active={path === '/projects'} as={'div'}>
-          <Link to='/projects'>Projects</Link>
-        </Navbar.Link>
-      </Navbar.Collapse>
+      <div className='flex gap-8'>
+        
+          <Link className='font-semibold hover:underline' to='/'>Home</Link>
+        
+        
+          <Link className='font-semibold hover:underline' to='/about'>About</Link>
+        
+        
+          <Link className='font-semibold hover:underline' to='/projects'>Projects</Link>
+        
+      </div>
     </Navbar>
 );
 }
