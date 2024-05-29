@@ -43,69 +43,78 @@ export default function Header  ()  {
   
 
   return (
-    <header className='bg-slate-200 shadow-md'>
-    <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
-      <Link to='/'>
-        <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
-          <span className='text-slate-500'>Mati</span>
-          <span className='text-slate-700'>Blog</span>
-        </h1>
-      </Link>
-      <form
-        onSubmit={handleSubmit}
-        className='bg-slate-100 p-3 rounded-lg flex items-center'
+    <Navbar className='border-b-2'>
+      <Link
+        to='/'
+        className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'
       >
-        <input
+        <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>
+          Sahand's
+        </span>
+        Blog
+      </Link>
+      <form onSubmit={handleSubmit}>
+        <TextInput
           type='text'
           placeholder='Search...'
-          className='bg-transparent focus:outline-none w-24 sm:w-64'
+          rightIcon={AiOutlineSearch}
+          className='hidden lg:inline lg:align-middle'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button>
-          <FaSearch className='text-slate-600 ml-2' />
-        </button>
       </form>
-      <ul className='flex gap-4'>
-        <Link to='/'>
-          <li className='hidden sm:inline text-slate-700 hover:underline'>
-            Home
-          </li>
-        </Link>
-        <Link to='/about'>
-          <li className='hidden sm:inline text-slate-700 hover:underline'>
-            About
-          </li>
-        </Link>
-        <Link to='/projects'>
-          <li className='hidden sm:inline text-slate-700 hover:underline'>
-            Projects
-          </li>
-        </Link>
-      </ul>
-      <button className='text-black' onClick={()=> dispatch(toggleTheme())}>
-        {theme === 'light' ? <FaSun/> : <FaMoon/> }
-      </button>
-
-    {
-      currentUser ? (
-        <div className='flex flex-col'>
-            <Link className='bg-gray-400 px-2 rounded-lg hover:bg-gray-300' to='/dashboard'>Dashboard</Link>
-            <button onClick={handleSignout} className="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:bg-gray-600 hover:text-white">Sign out</button>
-       
+      <Button className='w-12 h-10 lg:hidden' color='gray' pill>
+        <AiOutlineSearch />
+      </Button>
+      <div className='flex gap-2 md:order-2'>
+        <Button
+          className='w-12 h-10 hidden sm:inline'
+          color='gray'
+          pill
+          onClick={() => dispatch(toggleTheme())}
+        >
+          {theme === 'light' ? <FaSun /> : <FaMoon />}
+        </Button>
+        {currentUser ? (
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar alt='user' img={currentUser.profilePicture} rounded />
+            }
+          >
+            <Dropdown.Header>
+              <span className='block text-sm'>@{currentUser.username}</span>
+              <span className='block text-sm font-medium truncate'>
+                {currentUser.email}
+              </span>
+            </Dropdown.Header>
+            <Link to={'/dashboard?tab=profile'}>
+              <Dropdown.Item>Profile</Dropdown.Item>
+            </Link>
+            <Dropdown.Divider />
+            <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
+          </Dropdown>
+        ) : (
+          <Link to='/sign-in'>
+            <Button gradientDuoTone='purpleToBlue' outline>
+              Sign In
+            </Button>
+          </Link>
+        )}
+        <Navbar.Toggle />
       </div>
-      ) : (
-        <Link className=' px-2 py-1 rounded-lg bg-blue-300 hover:bg-blue-600' to='/sign-in'>
-        <button>
-          Sign in
-        </button>
-      </Link>
-      )
-    }
-
-
-  
-    </div>
-  </header>
-)
-};
+      <Navbar.Collapse>
+        <Navbar.Link className='mx-3' active={path === '/'} as={'div'}>
+          <Link to='/'>Home</Link>
+        </Navbar.Link>
+        <Navbar.Link className='mr-3' active={path === '/about'} as={'div'}>
+          <Link to='/about'>About</Link>
+        </Navbar.Link>
+        <Navbar.Link active={path === '/projects'} as={'div'}>
+          <Link to='/projects'>Projects</Link>
+        </Navbar.Link>
+      </Navbar.Collapse>
+    </Navbar>
+);
+}
