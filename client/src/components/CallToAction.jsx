@@ -1,4 +1,4 @@
-import { Button } from 'flowbite-react';
+
 
 export default function CallToAction() {
   return (
@@ -10,11 +10,13 @@ export default function CallToAction() {
             <p className='text-gray-500 my-2'>
                 Checkout these amazing projects
             </p>
-            <Button gradientDuoTone='purpleToPink' className='rounded-tl-xl rounded-bl-none'>
-                <a href="https://www.github.com/matidlr" target='_blank' rel='noopener noreferrer'>
+            <button className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l 
+          focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium 
+          rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-full">
+                <a href="https://github.com/matidlr" target='_blank' rel='noopener noreferrer'>
                     Projects
                 </a>
-            </Button>
+            </button>
         </div>
         <div className="p-7 flex-1">
             <img src="https://bairesdev.mo.cloudinary.net/blog/2023/08/What-Is-JavaScript-Used-For.jpg" />
