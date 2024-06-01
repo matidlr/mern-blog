@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .env
+DashboardComp.jsx
 
 # Editor directories and files
 .vscode/*

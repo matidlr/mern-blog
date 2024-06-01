@@ -64,6 +64,7 @@ export default function DashSidebar() {
           )}
          
          {currentUser.isAdmin && (
+          <>
               <Link to='/dashboard?tab=users'>
               <div className='flex hover:bg-slate-400 items-center text-white'>
               <span className='mr-0.5'>
@@ -72,6 +73,15 @@ export default function DashSidebar() {
                  <p>Users</p>
               </div>
           </Link>
+            <Link to='/dashboard?tab=comments'>
+            <div className='flex hover:bg-slate-400 items-center text-white'>
+            <span className='mr-0.5'>
+              <HiAnnotation className='text-white'/>
+            </span>
+               <p>Comments</p>
+            </div>
+        </Link>
+        </>
           )}
           
           <div className=' text-white cursor-pointer flex hover:bg-slate-400 items-center'>
