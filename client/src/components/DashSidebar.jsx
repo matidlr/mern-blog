@@ -41,55 +41,77 @@ export default function DashSidebar() {
     }
   };
   return (
-    <div>
-      <div className='bg-gray-500 w-20 h-72'>
-        <div className='bg-black-600 w-20  pt-2'>
-          <Link to='/dashboard?tab=profile'>
-              <div className='flex hover:bg-slate-400 items-center text-white'>
-              <span className='mr-0.5'>
-                <HiUser className='text-white'/>
-              </span>
-                 <p>Profile</p>
-              </div>
-          </Link>
-          {currentUser.isAdmin && (
-              <Link to='/dashboard?tab=posts'>
-              <div className='flex hover:bg-slate-400 items-center text-white'>
-              <span className='mr-0.5'>
-                <HiDocumentText className='text-white'/>
-              </span>
-                 <p>Posts</p>
-              </div>
-          </Link>
-          )}
-         
-         {currentUser.isAdmin && (
-          <>
-              <Link to='/dashboard?tab=users'>
-              <div className='flex hover:bg-slate-400 items-center text-white'>
-              <span className='mr-0.5'>
-                <HiOutlineUserGroup className='text-white'/>
-              </span>
-                 <p>Users</p>
-              </div>
-          </Link>
-            <Link to='/dashboard?tab=comments'>
-            <div className='flex hover:bg-slate-400 items-center text-white'>
-            <span className='mr-0.5'>
-              <HiAnnotation className='text-white'/>
-            </span>
-               <p>Comments</p>
-            </div>
-        </Link>
-        </>
-          )}
-          
-          <div className=' text-white cursor-pointer flex hover:bg-slate-400 items-center'>
-            <span className='mr-0.5'><HiArrowSmRight/></span>
-            <p onClick={handleSignout}>Sign out</p>
-          </div>
-        </div>
+<div className="min-h-screen flex flex-row bg-gray-100">
+  <div className="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
+    <ul className="flex flex-col py-4">
+
+       
+{currentUser && currentUser.isAdmin && (
+    
+    <li className={tab === 'dash' ? 'bg-green-200' : ''}>
+      <Link  to='/dashboard?tab=dash' className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+        <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"> <HiChartPie/><i className="bx bx-home"></i></span>
+        <span className="text-sm font-medium">Dashboard</span>
+
+      </Link>
+    </li>
+         )}
+    
+    
+    <li className={tab === 'profile' ? 'bg-green-200' : ''}>
+      <Link to='/dashboard?tab=profile' className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+        <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"> <HiUser/><i className="bx bx-home"></i></span>
+        <span className="text-sm font-medium">Profile</span>
+
+      </Link>
+    </li>
+      
+      {currentUser.isAdmin && (
+    
+    <li className={tab === 'posts' ? 'bg-green-200' : ''}>
+      <Link to='/dashboard?tab=posts' className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+        <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"> <HiDocumentText/><i className="bx bx-home"></i></span>
+        <span className="text-sm font-medium">Posts</span>
+
+      </Link>
+    </li>
+         )}
+      {currentUser.isAdmin && (
+    <>
+    <li className={tab === 'users' ? 'bg-green-200' : ''}>
+      <Link to='/dashboard?tab=users' className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+        <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"> <HiOutlineUserGroup/><i className="bx bx-home"></i></span>
+        <span className="text-sm font-medium">Users</span>
+
+      </Link>
+    </li>
+      
+    <li className={tab === 'comments' ? 'bg-green-200' : ''}>
+      <Link to='/dashboard?tab=comments' className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+        <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"> <HiAnnotation/><i className="bx bx-home"></i></span>
+        <span className="text-sm font-medium">Comments</span>
+
+      </Link>
+    </li>
+    </>
+     )}
+
+    <li>
+      <div onClick={handleSignout}
+       className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+        <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"> <HiArrowSmRight/><i className="bx bx-home"></i></span>
+        <span className="text-sm font-medium">Sign Out</span>
+
       </div>
-    </div>
-  )
+    </li>
+        
+    </ul>
+  </div>
+</div>
+  );
 }
+
+
+
+
+
