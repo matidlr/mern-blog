@@ -87,6 +87,7 @@ export default function Header  ()  {
         </button>
         {currentUser ? (
           <Dropdown
+            className='mx-2'
             arrowIcon={false}
             inline
             label={
