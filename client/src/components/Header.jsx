@@ -10,20 +10,22 @@ import { signoutSuccess } from '../redux/user/userSlice';
 
 
 export default function Header  ()  {
+  const path = useLocation().pathname;
+  const location = useLocation();
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
-  const [searchTerm, setSearchTerm] = useState('')
   const [visible, setVisible] = useState(false);
-  const path = useLocation().pathname;
   const dispatch = useDispatch();
-
-   const handleSubmit  = async (e) =>{
-        e.preventDefault();
-        const urlParams = new URLSearchParams(location.search);
-        urlParams.set('searchTerm', searchTerm);
-        const searchQuery = urlParams.toString();
-        navigate(`/search?${searchQuery}`);
-   };
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get('searchTerm');
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
 
    const handleSignout = async () => {
     try {
@@ -40,6 +42,14 @@ export default function Header  ()  {
       console.log(error);
     }
   };
+
+  const handleSubmit  = async (e) =>{
+    e.preventDefault();
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('searchTerm', searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+};
   
 
   return (
@@ -48,19 +58,19 @@ export default function Header  ()  {
         to='/'
         className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'
       >
-        <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>
+        <span className='px-2 py-1 bg-gradient-to-r from-blue-500 via-orange-300 to-yellow-400 rounded-lg text-white'>
           Mati's
         </span>
         Blog
       </Link>
       <form onSubmit={handleSubmit}>
         <TextInput
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           type='text'
           placeholder='Search...'
           rightIcon={AiOutlineSearch}
           className='hidden lg:inline lg:align-middle'
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </form>
       <Button className='w-12 h-10 lg:hidden' color='gray' pill>
