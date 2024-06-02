@@ -58,33 +58,33 @@ export default function Header  ()  {
         to='/'
         className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'
       >
-        <span className='px-2 py-1 bg-gradient-to-r from-blue-500 via-orange-300 to-yellow-400 rounded-lg text-white'>
+        <span className='px-2 py-1 bg-gradient-to-r from-blue-500  to-green-400 rounded-lg text-white'>
           Mati's
         </span>
         Blog
       </Link>
       <form onSubmit={handleSubmit}>
-        <TextInput
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          type='text'
-          placeholder='Search...'
-          rightIcon={AiOutlineSearch}
-          className='hidden lg:inline lg:align-middle'
-        />
+     
+         <input 
+              type="search" 
+              
+              placeholder="Search" 
+              className="relative bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              />
+        
+    
       </form>
-      <Button className='w-12 h-10 lg:hidden' color='gray' pill>
-        <AiOutlineSearch />
-      </Button>
       <div className='flex gap-2 md:order-2'>
-        <Button
+        <button
           className='w-12 h-10 hidden sm:inline'
           color='gray'
           pill
           onClick={() => dispatch(toggleTheme())}
         >
           {theme === 'light' ? <FaSun /> : <FaMoon />}
-        </Button>
+        </button>
         {currentUser ? (
           <Dropdown
             arrowIcon={false}
@@ -116,13 +116,17 @@ export default function Header  ()  {
       </div>
       <div className='flex gap-8'>
         
-          <Link className='font-semibold hover:underline' to='/'>Home</Link>
-        
-        
-          <Link className='font-semibold hover:underline' to='/about'>About</Link>
-        
-        
-          <Link className='font-semibold hover:underline' to='/projects'>Projects</Link>
+          <ul class="flex items-center">
+            <li className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer active">
+              <Link className='font-semibold hover:underline' to='/'>Home</Link>
+            </li>
+            <li className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer">
+              <Link className='font-semibold hover:underline' to='/about'>About</Link>
+            </li>
+            <li className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer">
+               <Link className='font-semibold hover:underline' to='/projects'>Projects</Link>
+            </li>
+        </ul>
         
       </div>
     </Navbar>
