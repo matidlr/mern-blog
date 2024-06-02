@@ -87,7 +87,7 @@ const handleSubmit = async (e) => {
                        loading ? 'Loading...' : 'Sign In'
                     }
                 </button>
-               <OAuth />
+               
             </form>
 
             <div className="flex gap-2 text-sm mt-5">
@@ -96,13 +96,7 @@ const handleSubmit = async (e) => {
                   Sign Up
                </Link>
             </div>
-            {
-              errorMessage && (
-                <div className='mt-3'>
-                  <span className="font-medium bg-red-600 p-1 text-white">{errorMessage}</span>
-                </div>
-              )
-            }
+         
           </div>
        </div>
     </div>
